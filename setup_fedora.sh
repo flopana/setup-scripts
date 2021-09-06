@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Flo's set up script for Fedora/RHEL like distributions"
+echo "Flo's set up script for Fedora like distributions"
 
 sudo dnf update --refresh -y
 
@@ -23,6 +23,15 @@ echo "alias c='clear'" >> ~/.bashrc
 echo "alias tailf='tail -f'" >> ~/.bashrc
 echo "alias vim='nvim'" >> ~/.bashrc
 
+echo ""
+echo "Setting up Neovim"
+
+echo ""
+echo "Installing Vim Plug"
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+pip3 install --user neovim || pip install --user neovim
+
 mkdir -p ~/.config/nvim
 
 echo "
@@ -35,6 +44,6 @@ set number
 set relativenumber
 " >> ~/.config/nvim/init.vim
 
-nvim +PlugInstall +qall
+nvim +PlugInstall +UpdateRemotePlugins +qall
 
 neofetch
