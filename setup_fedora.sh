@@ -1,14 +1,11 @@
 #!/bin/bash
+clear
 echo "Flo's set up script for Fedora like distributions"
 
 sudo dnf update --refresh -y
 
 echo ""
-echo "Now installing epel-release repo will fail on Fedora but also not needed"
-sudo dnf install epel-release -y
-
-echo ""
-echo "Installing general shit"
+echo "Installing general stuff"
 sudo dnf install htop curl wget	neovim nano git	gcc gpg make tmux neofetch flatpak -y
 
 echo ""
@@ -34,6 +31,9 @@ pip3 install --user neovim || pip install --user neovim
 
 mkdir -p ~/.config/nvim
 
+echo ""
+ecoh "Setting up Neovim plugins"
+
 echo "
 call plug#begin()
 Plug 'vim-airline/vim-airline'
@@ -46,4 +46,7 @@ set relativenumber
 
 nvim +PlugInstall +UpdateRemotePlugins +qall
 
+source ~/.bashrc
+
+clear
 neofetch
