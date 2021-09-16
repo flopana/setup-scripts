@@ -32,16 +32,42 @@ pip3 install --user neovim || pip install --user neovim
 mkdir -p ~/.config/nvim
 
 echo ""
-ecoh "Setting up Neovim plugins"
+echo "Setting up Neovim plugins"
 
 echo "
+\"Plugins
 call plug#begin()
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
 call plug#end()
 
+\"Line numbers
 set number
 set relativenumber
+
+\"AirlineTheme settings
+let g:airline_theme='bubblegum'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+\"Open NERDTree automatically
+autocmd VimEnter * NERDTree | wincmd p
+\"Open NERDTree tab in every tab automatically
+autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+\"Close NERDTree automatically
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+\"Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 " >> ~/.config/nvim/init.vim
 
 nvim +PlugInstall +UpdateRemotePlugins +qall
